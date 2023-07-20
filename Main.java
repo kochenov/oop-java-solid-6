@@ -3,9 +3,17 @@
  */
 public class Main {
     public static void main(String[] args) {
-        CalculatorView view = new ConsoleCalculatorView();
-        CalculatorPresenter presenter = new CalculatorPresenterImpl(view);
+        // Создаем экземпляр представления для ввода и вывода
+        CalculatorInputView inputView = new ConsoleCalculatorView();
+        CalculatorOutputView outputView = new ConsoleCalculatorView();
 
-        presenter.onCalculateButtonClicked();
+        // Создаем экземпляр модели данных
+        CalculatorModel model = new CalculatorModel();
+
+        // Создаем презентер, передавая ему экземпляры представления и модели данных
+        CalculatorPresenter presenter = new CalculatorPresenterImpl(inputView, outputView, model);
+
+        // Запускаем выполнение расчета
+        presenter.calculate();
     }
 }

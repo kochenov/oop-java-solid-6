@@ -2,8 +2,10 @@ import java.util.Scanner;
 
 /**
  * Реализация View (представления) в архитектуре MVP для консольного ввода и вывода.
+ * Рефакторинг 4: Разделение интерфейсов представления и модели данных.
+ * Изменяем соответствующим образом реализацию ConsoleCalculatorView
  */
-public class ConsoleCalculatorView implements CalculatorView {
+public class ConsoleCalculatorView implements CalculatorInputView, CalculatorOutputView {
     private Scanner scanner;
 
     public ConsoleCalculatorView() {
@@ -14,6 +16,7 @@ public class ConsoleCalculatorView implements CalculatorView {
     public void showResult(double result) {
         System.out.println("Результат: " + result);
     }
+
 
     @Override
     public double getFirstNumber() {

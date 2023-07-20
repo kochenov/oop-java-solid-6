@@ -1,39 +1,31 @@
 /**
  * Реализация Presenter (презентера) в архитектуре MVP для выполнения математических операций.
+ *
+ * Рефакторинг 2: Использование интерфейсов для View и Presenter.
+ * Это следует принципу "Dependency Inversion" из принципов SOLID, который гласит, что модули
+ * верхнего уровня не должны зависеть от модулей нижнего уровня, оба типа модулей должны зависеть
+ * от абстракций.
+ * Рефакторинг 4: Разделение интерфейсов представления и модели данных.
  */
 public class CalculatorPresenterImpl implements CalculatorPresenter {
-    private CalculatorView view;
+    private CalculatorInputView inputView;
+    private CalculatorOutputView outputView;
+    private CalculatorModel model;
 
-    public CalculatorPresenterImpl(CalculatorView view) {
-        this.view = view;
+    public CalculatorPresenterImpl(CalculatorInputView inputView, CalculatorOutputView outputView, CalculatorModel model) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.model = model;
     }
 
     @Override
-    public void onCalculateButtonClicked() {
-        double firstNumber = view.getFirstNumber();
-        double secondNumber = view.getSecondNumber();
-        char operation = view.getOperation();
+    public void calculate() {
+        double firstNumber = inputView.getFirstNumber();
+        double secondNumber = inputView.getSecondNumber();
+        char operation = inputView.getOperation();
 
-        double result;
+        double result = model.performOperation(firstNumber, secondNumber, operation);
 
-        switch (operation) {
-            case '+':
-                result = firstNumber + secondNumber;
-                break;
-            case '-':
-                result = firstNumber - secondNumber;
-                break;
-            case '*':
-                result = firstNumber * secondNumber;
-                break;
-            case '/':
-                result = firstNumber / secondNumber;
-                break;
-            default:
-                view.showResult(Double.NaN);
-                return;
-        }
-
-        view.showResult(result);
+        outputView.showResult(result);
     }
 }
